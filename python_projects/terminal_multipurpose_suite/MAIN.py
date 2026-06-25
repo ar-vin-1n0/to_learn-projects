@@ -1,37 +1,70 @@
-
 from tasks.task_manager import TaskManager
 
-task_manager = TaskManager()
+
+manager = TaskManager()
 
 while True:
+    print("\n===== Task Manager =====")
+    print("1. Add Task")
+    print("2. View Tasks")
+    print("3. Complete Task")
+    print("4. Delete Task")
+    print("E. Exit")
 
-    try:
-        print("1 - add task")
-        print("2 - view task")
-        print("3 - complete task")
-        print("4 - delete task")
-        print("E - exit\n")
-        option = input("\nEnter your option : ").lower()
-        if option == "1":
-            title = input("\nEnter your task title : ").lower()
-            task_manager.add_task(title)
-            print("\nTask added successfully")
-        elif option == "2":
-            print(task_manager.list_tasks())
-        elif option == "3":
-            task_id = int(input("\nEnter your task id : "))
-            result = task_manager.complete_task(task_id)
-            print(result)
-        elif option == "4":
-            task_id = int(input("\nEnter your task id : "))
-            task_manager.delete_task(task_id)
-            print(f"\nTask {task_id} deleted successfully")
-        elif option == "e":
-            break
+    option = input("\nEnter your option: ").strip().lower()
+
+    if option == "1":
+
+        title = input("Enter task title: ").strip()
+
+        manager.add_task(title)
+
+        print("\nTask added successfully!")
+
+    elif option == "2":
+
+        tasks = manager.list_tasks()
+
+        if isinstance(tasks, str):
+            print(tasks)
         else:
-            print("Invalid option")
-    except ValueError:
-        print("Invalid option")
+            for task in tasks:
+                print(task)
+
+    elif option == "3":
+
+        try:
+            task_id = int(input("Enter task ID: "))
+
+            result = manager.complete_task(task_id)
+
+            print(result)
+
+        except ValueError:
+            print("Task ID must be a number.")
+
+    elif option == "4":
+
+        try:
+            task_id = int(input("Enter task ID: "))
+
+            result = manager.delete_task_by_id(task_id)
+
+            print(result)
+
+        except ValueError:
+            print("Task ID must be a number.")
+
+    elif option == "e":
+
+        print("\nGoodbye!")
+
+        break
+
+    else:
+
+        print("\nInvalid option. Please try again.")
+
 
 
 
